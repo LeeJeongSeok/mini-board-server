@@ -11,7 +11,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -25,12 +27,18 @@ public class PostController {
 	private final PostService postService;
 
 	@PostMapping("")
-	public ResponseEntity<String> createPost(@Valid @RequestBody PostRequestDto postRequestDto) {
+	public ResponseEntity<String> createPost(@Valid @RequestBody PostRequestDto.CreatePost createPost) {
 
 		// 실제 post 처리 로직
-		postService.save(postRequestDto);
+		postService.save(createPost);
 
 		return new ResponseEntity<>("Post created successfully", HttpStatus.CREATED);
+	}
+
+	@PutMapping("/{postId}")
+	public ResponseEntity<String> updatePost(@PathVariable Long postId, @Valid @RequestBody PostRequestDto.UpdatePost updatePost) {
+		 postService.update(postId, updatePost);
+		return new ResponseEntity<>("Post updated successfully", HttpStatus.OK);
 	}
 
 	// 유효성 검사 실패 시 발생하는 예외를 처리하는 메서드
