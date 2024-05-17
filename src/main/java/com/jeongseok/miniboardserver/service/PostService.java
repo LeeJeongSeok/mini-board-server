@@ -6,6 +6,7 @@ import com.jeongseok.miniboardserver.dto.post.PostRequestDto;
 import com.jeongseok.miniboardserver.dto.post.PostResponseDto;
 import com.jeongseok.miniboardserver.repository.PostRepository;
 import jakarta.transaction.Transactional;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +15,13 @@ import org.springframework.stereotype.Service;
 public class PostService {
 
 	private final PostRepository postRepository;
+
+
+	public List<PostResponseDto> findAll() {
+		List<Post> posts = postRepository.findAll();
+
+		return PostMapper.toDto(posts);
+	}
 
 	public PostResponseDto findByPostId(Long postId) {
 		Post post = postRepository.findById(postId)
