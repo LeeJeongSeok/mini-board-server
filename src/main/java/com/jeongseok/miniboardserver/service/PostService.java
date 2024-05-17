@@ -1,7 +1,9 @@
 package com.jeongseok.miniboardserver.service;
 
 import com.jeongseok.miniboardserver.domain.Post;
+import com.jeongseok.miniboardserver.dto.mapper.PostMapper;
 import com.jeongseok.miniboardserver.dto.post.PostRequestDto;
+import com.jeongseok.miniboardserver.dto.post.PostResponseDto;
 import com.jeongseok.miniboardserver.repository.PostRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -13,8 +15,15 @@ public class PostService {
 
 	private final PostRepository postRepository;
 
+	public PostResponseDto findByPostId(Long postId) {
+		Post post = postRepository.findById(postId)
+			.orElseThrow(() -> new IllegalArgumentException("게시글을 찾을 수 없습니다. ID: " + postId));
+
+		return PostMapper.toDto(post);
+	}
+
 	public void save(PostRequestDto.CreatePost createPost) {
-		Post post = convertToEntity(createPost);
+		Post post = PostMapper.toEntity(createPost);
 		postRepository.save(post);
 	}
 
@@ -23,17 +32,7 @@ public class PostService {
 		Post post = postRepository.findById(postId)
 			.orElseThrow(() -> new IllegalArgumentException("게시글을 찾을 수 없습니다. ID: " + postId));
 
-		post.setTitle(updatePost.getTitle());
-		post.setContent(updatePost.getContent());
-		// updatedAt은 @PreUpdate에 의해 자동으로 설정됩니다.
+		PostMapper.toEntity(updatePost, post);
 	}
 
-	private Post convertToEntity(PostRequestDto.CreatePost createPost) {
-		Post post = new Post();
-		post.setTitle(createPost.getTitle());
-		post.setContent(createPost.getContent());
-		post.setAuthor(createPost.getAuthor());
-
-		return post;
-	}
 }

@@ -30,6 +30,8 @@ public class Post {
 
 	private LocalDateTime updatedAt;
 
+	// TODO: 생성, 수정, 삭제와 관련된 비지니스 로직을 여기에 추가해야하나?
+
 	@PrePersist
 	protected void onCreate() {
 		createdAt = LocalDateTime.now();

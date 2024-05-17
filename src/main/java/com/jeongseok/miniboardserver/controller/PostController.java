@@ -1,6 +1,7 @@
 package com.jeongseok.miniboardserver.controller;
 
 import com.jeongseok.miniboardserver.dto.post.PostRequestDto;
+import com.jeongseok.miniboardserver.dto.post.PostResponseDto;
 import com.jeongseok.miniboardserver.service.PostService;
 import jakarta.validation.Valid;
 import java.util.HashMap;
@@ -11,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -25,6 +27,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class PostController {
 
 	private final PostService postService;
+
+	@GetMapping("/{postId}")
+	public ResponseEntity<PostResponseDto> readPost(@PathVariable Long postId) {
+		PostResponseDto postResponseDto = postService.findByPostId(postId);
+
+		return new ResponseEntity<>(postResponseDto, HttpStatus.OK);
+	}
 
 	@PostMapping("")
 	public ResponseEntity<String> createPost(@Valid @RequestBody PostRequestDto.CreatePost createPost) {
