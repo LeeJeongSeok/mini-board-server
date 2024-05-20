@@ -18,7 +18,7 @@ public class PostService {
 
 
 	public List<PostResponseDto> findAll() {
-		List<Post> posts = postRepository.findAll();
+		List<Post> posts = postRepository.findAllByUseYn();
 
 		return PostMapper.toDto(posts);
 	}
