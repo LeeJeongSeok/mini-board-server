@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -54,8 +55,16 @@ public class PostController {
 
 	@PutMapping("/{postId}")
 	public ResponseEntity<String> updatePost(@PathVariable Long postId, @Valid @RequestBody PostRequestDto.UpdatePost updatePost) {
-		 postService.update(postId, updatePost);
+	 	postService.update(postId, updatePost);
 		return new ResponseEntity<>("Post updated successfully", HttpStatus.OK);
+	}
+
+	@DeleteMapping("/{postId}")
+	public ResponseEntity<String> deletePost(@PathVariable Long postId) {
+		postService.delete(postId);
+
+		// TODO: 성공적으로 삭제될 경우 204 NO_CONTENT를 응답으로 내보내는데, 이때 본문의 콘텐츠가 없다. 다른 응답코드로 사용해보자
+		return new ResponseEntity<>("Post deleted successfully", HttpStatus.NO_CONTENT);
 	}
 
 	// 유효성 검사 실패 시 발생하는 예외를 처리하는 메서드

@@ -30,6 +30,7 @@ public class PostService {
 		return PostMapper.toDto(post);
 	}
 
+	@Transactional
 	public void save(PostRequestDto.CreatePost createPost) {
 		Post post = PostMapper.toEntity(createPost);
 		postRepository.save(post);
@@ -43,4 +44,11 @@ public class PostService {
 		PostMapper.toEntity(updatePost, post);
 	}
 
+	@Transactional
+	public void delete(Long postId) {
+		Post post = postRepository.findById(postId)
+			.orElseThrow(() -> new IllegalArgumentException("게시글을 찾을 수 없습니다. ID: " + postId));
+
+		postRepository.delete(post);
+	}
 }

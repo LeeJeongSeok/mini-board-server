@@ -10,10 +10,12 @@ import jakarta.persistence.PreUpdate;
 import java.time.LocalDateTime;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.SQLDelete;
 
 @Entity
 @Getter
 @Setter
+@SQLDelete(sql = "UPDATE post SET use_yn = 'N' WHERE post_id = ?")
 public class Post {
 
 	@Id
@@ -29,6 +31,7 @@ public class Post {
 	private LocalDateTime createdAt;
 
 	private LocalDateTime updatedAt;
+	private String useYn;
 
 	// TODO: 생성, 수정, 삭제와 관련된 비지니스 로직을 여기에 추가해야하나?
 
