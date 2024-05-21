@@ -13,6 +13,7 @@ public class PostMapper {
 		post.setTitle(dto.getTitle());
 		post.setContent(dto.getContent());
 		post.setAuthor(dto.getAuthor());
+		post.setUseYn("Y");
 
 		return post;
 	}
