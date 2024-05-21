@@ -31,17 +31,20 @@ public class PostService {
 	}
 
 	@Transactional
-	public void save(PostRequestDto.CreatePost createPost) {
-		Post post = PostMapper.toEntity(createPost);
-		postRepository.save(post);
+	public Long save(PostRequestDto.CreatePost createPost) {
+		Post savedPost = postRepository.save(PostMapper.toEntity(createPost));
+
+		return savedPost.getPostId();
 	}
 
 	@Transactional
-	public void update(Long postId, PostRequestDto.UpdatePost updatePost) {
+	public PostResponseDto update(Long postId, PostRequestDto.UpdatePost updatePost) {
 		Post post = postRepository.findById(postId)
 			.orElseThrow(() -> new IllegalArgumentException("게시글을 찾을 수 없습니다. ID: " + postId));
 
-		PostMapper.toEntity(updatePost, post);
+		Post updatedPost = PostMapper.toEntity(updatePost, post);
+
+		return PostMapper.toDto(updatedPost);
 	}
 
 	@Transactional
