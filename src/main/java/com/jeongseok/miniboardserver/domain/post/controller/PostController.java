@@ -1,8 +1,9 @@
 package com.jeongseok.miniboardserver.domain.post.controller;
 
 import com.jeongseok.miniboardserver.common.ApiResponse;
-import com.jeongseok.miniboardserver.domain.post.dto.post.PostRequestDto;
-import com.jeongseok.miniboardserver.domain.post.dto.post.PostResponseDto;
+import com.jeongseok.miniboardserver.domain.post.dto.request.CreatePostRequest;
+import com.jeongseok.miniboardserver.domain.post.dto.request.UpdatePostRequest;
+import com.jeongseok.miniboardserver.domain.post.dto.response.PostResponseDto;
 import com.jeongseok.miniboardserver.domain.post.service.PostService;
 import jakarta.validation.Valid;
 import java.util.HashMap;
@@ -47,11 +48,11 @@ public class PostController {
 	}
 
 	@PostMapping("/api/v1/posts")
-	public ResponseEntity<ApiResponse<Long>> createPost(@Valid @RequestBody PostRequestDto.CreatePost createPost) {
+	public ResponseEntity<ApiResponse<Long>> createPost(@Valid @RequestBody CreatePostRequest createPostRequest) {
 
 		// 실제 post 처리 로직
 		// 성공적으로 DB에 적재가 된 것을 판별하기 위해 적재된 데이터의 id값을 가져온다.
-		Long postId = postService.save(createPost);
+		long postId = postService.createPost(createPostRequest);
 
 		ApiResponse<Long> response = ApiResponse.success(postId);
 
@@ -59,8 +60,8 @@ public class PostController {
 	}
 
 	@PutMapping("/api/v1/posts/{postId}")
-	public ResponseEntity<ApiResponse<PostResponseDto>> updatePost(@PathVariable Long postId, @Valid @RequestBody PostRequestDto.UpdatePost updatePost) {
-		PostResponseDto postResponseDto = postService.update(postId, updatePost);
+	public ResponseEntity<ApiResponse<PostResponseDto>> updatePost(@PathVariable long postId, @Valid @RequestBody UpdatePostRequest updatePostRequest) {
+		PostResponseDto postResponseDto = postService.updatePost(postId, updatePostRequest);
 		ApiResponse<PostResponseDto> response = ApiResponse.success(postResponseDto);
 
 		return new ResponseEntity<>(response, HttpStatus.OK);

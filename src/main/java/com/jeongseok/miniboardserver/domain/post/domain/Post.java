@@ -7,13 +7,17 @@ import jakarta.persistence.Id;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import java.time.LocalDateTime;
+import java.util.List;
+import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.SQLDelete;
 
 @Entity
 @Getter
-@Setter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @SQLDelete(sql = "UPDATE post SET use_yn = 'N' WHERE post_id = ?")
 public class Post {
 
@@ -43,5 +47,21 @@ public class Post {
 	@PreUpdate
 	protected void onUpdate() {
 		updatedAt = LocalDateTime.now();
+	}
+
+	@Builder
+	public Post(long postId, String title, String content, String author, LocalDateTime createdAt, LocalDateTime updatedAt, String useYn) {
+		this.postId = postId;
+		this.title = title;
+		this.content = content;
+		this.author = author;
+		this.createdAt = createdAt;
+		this.updatedAt = updatedAt;
+		this.useYn = useYn;
+	}
+
+	public void updatePost(String title, String content) {
+		this.title = title;
+		this.content = content;
 	}
 }

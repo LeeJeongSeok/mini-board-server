@@ -2,9 +2,10 @@ package com.jeongseok.miniboardserver.domain.post.service;
 
 import com.jeongseok.miniboardserver.domain.post.domain.Post;
 import com.jeongseok.miniboardserver.domain.post.dto.mapper.PostMapper;
+import com.jeongseok.miniboardserver.domain.post.dto.request.CreatePostRequest;
+import com.jeongseok.miniboardserver.domain.post.dto.request.UpdatePostRequest;
 import com.jeongseok.miniboardserver.domain.post.repository.PostRepository;
-import com.jeongseok.miniboardserver.domain.post.dto.post.PostRequestDto;
-import com.jeongseok.miniboardserver.domain.post.dto.post.PostResponseDto;
+import com.jeongseok.miniboardserver.domain.post.dto.response.PostResponseDto;
 import jakarta.transaction.Transactional;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +17,6 @@ public class PostService {
 
 	private final PostRepository postRepository;
 
-
 	public List<PostResponseDto> findAll() {
 		List<Post> posts = postRepository.findAllByUseYn();
 
@@ -27,24 +27,25 @@ public class PostService {
 		Post post = postRepository.findById(postId)
 			.orElseThrow(() -> new IllegalArgumentException("게시글을 찾을 수 없습니다. ID: " + postId));
 
+		// Response에서 DTO로 변환
 		return PostMapper.toDto(post);
 	}
 
 	@Transactional
-	public Long save(PostRequestDto.CreatePost createPost) {
-		Post savedPost = postRepository.save(PostMapper.toEntity(createPost));
+	public long createPost(CreatePostRequest createPostRequest) {
+		Post savedPost = postRepository.save(createPostRequest.toEntity());
 
 		return savedPost.getPostId();
 	}
 
 	@Transactional
-	public PostResponseDto update(Long postId, PostRequestDto.UpdatePost updatePost) {
+	public PostResponseDto updatePost(long postId, UpdatePostRequest updatePostRequest) {
 		Post post = postRepository.findById(postId)
 			.orElseThrow(() -> new IllegalArgumentException("게시글을 찾을 수 없습니다. ID: " + postId));
 
-		Post updatedPost = PostMapper.toEntity(updatePost, post);
+		post.updatePost(updatePostRequest.getTitle(), updatePostRequest.getContent());
 
-		return PostMapper.toDto(updatedPost);
+		return PostMapper.toDto(post);
 	}
 
 	@Transactional
