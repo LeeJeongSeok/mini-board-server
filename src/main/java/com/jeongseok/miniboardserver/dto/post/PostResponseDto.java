@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 public class PostResponseDto {
 
-	private Long postId;
+	private long postId;
 	private String title;
 	private String content;
 	private String author;
