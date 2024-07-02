@@ -25,20 +25,20 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/posts")
+@RequestMapping
 @RequiredArgsConstructor
 public class PostController {
 
 	private final PostService postService;
 
-	@GetMapping("")
+	@GetMapping("/api/v1/posts")
 	public ResponseEntity<ApiResponse<List<PostResponseDto>>> readPosts() {
 		List<PostResponseDto> posts = postService.findAll();
 		ApiResponse<List<PostResponseDto>> response = ApiResponse.success(posts);
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
-	@GetMapping("/{postId}")
+	@GetMapping("/api/v1/posts/{postId}")
 	public ResponseEntity<ApiResponse<PostResponseDto>> readPost(@PathVariable Long postId) {
 		PostResponseDto postResponseDto = postService.findByPostId(postId);
 		ApiResponse<PostResponseDto> response = ApiResponse.success(postResponseDto);
@@ -46,7 +46,7 @@ public class PostController {
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
-	@PostMapping("")
+	@PostMapping("/api/v1/posts")
 	public ResponseEntity<ApiResponse<Long>> createPost(@Valid @RequestBody PostRequestDto.CreatePost createPost) {
 
 		// 실제 post 처리 로직
@@ -58,7 +58,7 @@ public class PostController {
 		return new ResponseEntity<>(response, HttpStatus.CREATED);
 	}
 
-	@PutMapping("/{postId}")
+	@PutMapping("/api/v1/posts/{postId}")
 	public ResponseEntity<ApiResponse<PostResponseDto>> updatePost(@PathVariable Long postId, @Valid @RequestBody PostRequestDto.UpdatePost updatePost) {
 		PostResponseDto postResponseDto = postService.update(postId, updatePost);
 		ApiResponse<PostResponseDto> response = ApiResponse.success(postResponseDto);
@@ -66,7 +66,7 @@ public class PostController {
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
-	@DeleteMapping("/{postId}")
+	@DeleteMapping("/api/v1/posts/{postId}")
 	public ResponseEntity<ApiResponse<String>> deletePost(@PathVariable Long postId) {
 		postService.delete(postId);
 
