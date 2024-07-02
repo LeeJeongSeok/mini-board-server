@@ -1,9 +1,9 @@
-package com.jeongseok.miniboardserver.controller;
+package com.jeongseok.miniboardserver.domain.post.controller;
 
 import com.jeongseok.miniboardserver.common.ApiResponse;
-import com.jeongseok.miniboardserver.dto.post.PostRequestDto;
-import com.jeongseok.miniboardserver.dto.post.PostResponseDto;
-import com.jeongseok.miniboardserver.service.PostService;
+import com.jeongseok.miniboardserver.domain.post.dto.post.PostRequestDto;
+import com.jeongseok.miniboardserver.domain.post.dto.post.PostResponseDto;
+import com.jeongseok.miniboardserver.domain.post.service.PostService;
 import jakarta.validation.Valid;
 import java.util.HashMap;
 import java.util.List;

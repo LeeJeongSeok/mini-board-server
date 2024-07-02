@@ -1,6 +1,6 @@
-package com.jeongseok.miniboardserver.repository;
+package com.jeongseok.miniboardserver.domain.post.repository;
 
-import com.jeongseok.miniboardserver.domain.Post;
+import com.jeongseok.miniboardserver.domain.post.domain.Post;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

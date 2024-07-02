@@ -1,4 +1,4 @@
-package com.jeongseok.miniboardserver.dto.post;
+package com.jeongseok.miniboardserver.domain.post.dto.post;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;

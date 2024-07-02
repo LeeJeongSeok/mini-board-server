@@ -1,6 +1,5 @@
-package com.jeongseok.miniboardserver.dto.post;
+package com.jeongseok.miniboardserver.domain.post.dto.post;
 
-import com.jeongseok.miniboardserver.domain.Post;
 import java.time.LocalDateTime;
 import lombok.Getter;
 import lombok.Setter;

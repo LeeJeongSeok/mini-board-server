@@ -1,10 +1,10 @@
-package com.jeongseok.miniboardserver.service;
+package com.jeongseok.miniboardserver.domain.post.service;
 
-import com.jeongseok.miniboardserver.domain.Post;
-import com.jeongseok.miniboardserver.dto.mapper.PostMapper;
-import com.jeongseok.miniboardserver.dto.post.PostRequestDto;
-import com.jeongseok.miniboardserver.dto.post.PostResponseDto;
-import com.jeongseok.miniboardserver.repository.PostRepository;
+import com.jeongseok.miniboardserver.domain.post.domain.Post;
+import com.jeongseok.miniboardserver.domain.post.dto.mapper.PostMapper;
+import com.jeongseok.miniboardserver.domain.post.repository.PostRepository;
+import com.jeongseok.miniboardserver.domain.post.dto.post.PostRequestDto;
+import com.jeongseok.miniboardserver.domain.post.dto.post.PostResponseDto;
 import jakarta.transaction.Transactional;
 import java.util.List;
 import lombok.RequiredArgsConstructor;

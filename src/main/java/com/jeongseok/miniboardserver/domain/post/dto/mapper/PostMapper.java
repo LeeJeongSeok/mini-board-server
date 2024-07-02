@@ -1,8 +1,8 @@
-package com.jeongseok.miniboardserver.dto.mapper;
+package com.jeongseok.miniboardserver.domain.post.dto.mapper;
 
-import com.jeongseok.miniboardserver.dto.post.PostRequestDto;
-import com.jeongseok.miniboardserver.dto.post.PostResponseDto;
-import com.jeongseok.miniboardserver.domain.Post;
+import com.jeongseok.miniboardserver.domain.post.dto.post.PostRequestDto;
+import com.jeongseok.miniboardserver.domain.post.dto.post.PostResponseDto;
+import com.jeongseok.miniboardserver.domain.post.domain.Post;
 import java.util.List;
 import java.util.stream.Collectors;
 
