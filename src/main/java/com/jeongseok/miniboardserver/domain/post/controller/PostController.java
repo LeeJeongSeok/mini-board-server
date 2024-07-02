@@ -3,7 +3,7 @@ package com.jeongseok.miniboardserver.domain.post.controller;
 import com.jeongseok.miniboardserver.common.ApiResponse;
 import com.jeongseok.miniboardserver.domain.post.dto.request.CreatePostRequest;
 import com.jeongseok.miniboardserver.domain.post.dto.request.UpdatePostRequest;
-import com.jeongseok.miniboardserver.domain.post.dto.response.PostResponseDto;
+import com.jeongseok.miniboardserver.domain.post.dto.response.PostResponse;
 import com.jeongseok.miniboardserver.domain.post.service.PostService;
 import jakarta.validation.Valid;
 import java.util.HashMap;
@@ -33,16 +33,16 @@ public class PostController {
 	private final PostService postService;
 
 	@GetMapping("/api/v1/posts")
-	public ResponseEntity<ApiResponse<List<PostResponseDto>>> readPosts() {
-		List<PostResponseDto> posts = postService.findAll();
-		ApiResponse<List<PostResponseDto>> response = ApiResponse.success(posts);
+	public ResponseEntity<ApiResponse<List<PostResponse>>> readPosts() {
+		List<PostResponse> posts = postService.findAll();
+		ApiResponse<List<PostResponse>> response = ApiResponse.success(posts);
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
 	@GetMapping("/api/v1/posts/{postId}")
-	public ResponseEntity<ApiResponse<PostResponseDto>> readPost(@PathVariable Long postId) {
-		PostResponseDto postResponseDto = postService.findByPostId(postId);
-		ApiResponse<PostResponseDto> response = ApiResponse.success(postResponseDto);
+	public ResponseEntity<ApiResponse<PostResponse>> readPost(@PathVariable long postId) {
+		PostResponse postResponse = postService.findByPostId(postId);
+		ApiResponse<PostResponse> response = ApiResponse.success(postResponse);
 
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
@@ -60,9 +60,9 @@ public class PostController {
 	}
 
 	@PutMapping("/api/v1/posts/{postId}")
-	public ResponseEntity<ApiResponse<PostResponseDto>> updatePost(@PathVariable long postId, @Valid @RequestBody UpdatePostRequest updatePostRequest) {
-		PostResponseDto postResponseDto = postService.updatePost(postId, updatePostRequest);
-		ApiResponse<PostResponseDto> response = ApiResponse.success(postResponseDto);
+	public ResponseEntity<ApiResponse<PostResponse>> updatePost(@PathVariable long postId, @Valid @RequestBody UpdatePostRequest updatePostRequest) {
+		PostResponse postResponse = postService.updatePost(postId, updatePostRequest);
+		ApiResponse<PostResponse> response = ApiResponse.success(postResponse);
 
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
