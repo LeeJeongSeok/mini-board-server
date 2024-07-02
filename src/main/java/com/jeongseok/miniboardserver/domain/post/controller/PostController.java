@@ -68,8 +68,9 @@ public class PostController {
 	}
 
 	@DeleteMapping("/api/v1/posts/{postId}")
-	public ResponseEntity<ApiResponse<String>> deletePost(@PathVariable Long postId) {
-		postService.delete(postId);
+	public ResponseEntity<ApiResponse<String>> deletePost(@PathVariable long postId) {
+
+		postService.deletePost(postId);
 
 		ApiResponse<String> response = ApiResponse.success();
 

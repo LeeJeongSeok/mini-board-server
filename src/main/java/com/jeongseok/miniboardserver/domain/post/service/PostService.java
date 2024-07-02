@@ -49,7 +49,7 @@ public class PostService {
 	}
 
 	@Transactional
-	public void delete(Long postId) {
+	public void deletePost(long postId) {
 		Post post = postRepository.findById(postId)
 			.orElseThrow(() -> new IllegalArgumentException("게시글을 찾을 수 없습니다. ID: " + postId));
 
