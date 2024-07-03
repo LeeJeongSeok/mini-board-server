@@ -21,11 +21,13 @@ public class CreatePostRequest {
 	@Size(max = 25, message = "작성자는 최대 25자까지 입력할 수 있습니다.")
 	private String author;
 
+
 	public Post toEntity() {
 		return Post.builder()
 			.title(getTitle())
 			.content(getContent())
 			.author(getAuthor())
+			.useYn("Y")
 			.build();
 	}
 
