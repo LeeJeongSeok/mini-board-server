@@ -2,6 +2,7 @@ package com.jeongseok.miniboardserver.domain.post.repository;
 
 import com.jeongseok.miniboardserver.domain.post.domain.Post;
 import com.jeongseok.miniboardserver.domain.post.dto.request.CreatePostRequest;
+import com.jeongseok.miniboardserver.domain.post.util.PostType;
 import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -39,12 +40,28 @@ class PostRepositoryTest {
 		createPostRequest.setTitle("title");
 		createPostRequest.setContent("content");
 		createPostRequest.setAuthor("test");
+		createPostRequest.setUseYn(PostType.Y);
+
+		CreatePostRequest createPostRequest2 = new CreatePostRequest();
+		createPostRequest2.setTitle("title2");
+		createPostRequest2.setContent("content2");
+		createPostRequest2.setAuthor("test2");
+		createPostRequest2.setUseYn(PostType.Y);
+
+		CreatePostRequest createPostRequest3 = new CreatePostRequest();
+		createPostRequest3.setTitle("title2");
+		createPostRequest3.setContent("content2");
+		createPostRequest3.setAuthor("test2");
+		createPostRequest3.setUseYn(PostType.N);
 
 		// when
 		postRepository.save(createPostRequest.toEntity());
-		List<Post> result = postRepository.findAllByUseYn();
+		postRepository.save(createPostRequest2.toEntity());
+		postRepository.save(createPostRequest3.toEntity());
+
+		List<Post> result = postRepository.findAllByUseYn(PostType.Y);
 
 		// then
-		Assertions.assertThat(result.get(0).getUseYn()).isEqualTo("Y");
+		Assertions.assertThat(result.size()).isEqualTo(2);
 	}
 }
