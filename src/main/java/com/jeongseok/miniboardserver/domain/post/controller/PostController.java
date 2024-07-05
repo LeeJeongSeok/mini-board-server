@@ -36,7 +36,7 @@ public class PostController {
 
 	@GetMapping("/api/v1/posts/{postId}")
 	public ResponseEntity<ApiResponse<PostResponse>> readPost(@PathVariable long postId) {
-		PostResponse postResponse = postService.findByPostId(postId);
+		PostResponse postResponse = postService.getByPostId(postId);
 		ApiResponse<PostResponse> response = ApiResponse.success(postResponse);
 
 		return new ResponseEntity<>(response, HttpStatus.OK);
