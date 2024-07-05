@@ -1,19 +1,20 @@
 package com.jeongseok.miniboardserver.domain.post.domain;
 
 import com.jeongseok.miniboardserver.domain.post.util.PostType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import java.time.LocalDateTime;
-import java.util.List;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import org.hibernate.annotations.SQLDelete;
 
 @Entity
@@ -26,15 +27,23 @@ public class Post {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long postId;
 
+	@Column(name = "title")
 	private String title;
 
+	@Column(name = "content")
 	private String content;
 
+	@Column(name = "author")
 	private String author;
 
+	@Column(name = "created_at")
 	private LocalDateTime createdAt;
 
+	@Column(name = "updated_at")
 	private LocalDateTime updatedAt;
+
+	@Enumerated(value = EnumType.STRING)
+	@Column(name = "use_yn")
 	private PostType useYn;
 
 	// TODO: 생성, 수정, 삭제와 관련된 비지니스 로직을 여기에 추가해야하나?
