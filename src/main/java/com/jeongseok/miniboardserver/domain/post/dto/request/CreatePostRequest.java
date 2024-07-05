@@ -1,6 +1,7 @@
 package com.jeongseok.miniboardserver.domain.post.dto.request;
 
 import com.jeongseok.miniboardserver.domain.post.domain.Post;
+import com.jeongseok.miniboardserver.domain.post.util.PostType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
@@ -21,13 +22,15 @@ public class CreatePostRequest {
 	@Size(max = 25, message = "작성자는 최대 25자까지 입력할 수 있습니다.")
 	private String author;
 
+	private PostType useYn = PostType.Y;
+
 
 	public Post toEntity() {
 		return Post.builder()
 			.title(getTitle())
 			.content(getContent())
 			.author(getAuthor())
-			.useYn("Y")
+			.useYn(getUseYn())
 			.build();
 	}
 

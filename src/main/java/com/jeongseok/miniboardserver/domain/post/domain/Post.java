@@ -1,5 +1,6 @@
 package com.jeongseok.miniboardserver.domain.post.domain;
 
+import com.jeongseok.miniboardserver.domain.post.util.PostType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -34,7 +35,7 @@ public class Post {
 	private LocalDateTime createdAt;
 
 	private LocalDateTime updatedAt;
-	private String useYn;
+	private PostType useYn;
 
 	// TODO: 생성, 수정, 삭제와 관련된 비지니스 로직을 여기에 추가해야하나?
 
@@ -50,7 +51,7 @@ public class Post {
 	}
 
 	@Builder
-	public Post(long postId, String title, String content, String author, LocalDateTime createdAt, LocalDateTime updatedAt, String useYn) {
+	public Post(long postId, String title, String content, String author, LocalDateTime createdAt, LocalDateTime updatedAt, PostType useYn) {
 		this.postId = postId;
 		this.title = title;
 		this.content = content;
@@ -63,5 +64,9 @@ public class Post {
 	public void updatePost(String title, String content) {
 		this.title = title;
 		this.content = content;
+	}
+
+	public void deletePost(long postId) {
+		this.useYn = PostType.N;
 	}
 }
