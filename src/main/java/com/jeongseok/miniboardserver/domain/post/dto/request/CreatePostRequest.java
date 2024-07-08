@@ -22,6 +22,9 @@ public class CreatePostRequest {
 	@Size(max = 25, message = "작성자는 최대 25자까지 입력할 수 있습니다.")
 	private String author;
 
+	@NotBlank(message = "비밀번호는 필수 입력 항목입니다.")
+	private String password;
+
 	private PostType useYn = PostType.Y;
 
 
@@ -30,6 +33,7 @@ public class CreatePostRequest {
 			.title(getTitle())
 			.content(getContent())
 			.author(getAuthor())
+			.password(getPassword())
 			.useYn(getUseYn())
 			.build();
 	}

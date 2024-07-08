@@ -42,6 +42,9 @@ public class Post {
 	@Column(name = "updated_at")
 	private LocalDateTime updatedAt;
 
+	@Column(name = "password")
+	private String password;
+
 	@Enumerated(value = EnumType.STRING)
 	@Column(name = "use_yn")
 	private PostType useYn;
@@ -60,13 +63,14 @@ public class Post {
 	}
 
 	@Builder
-	public Post(long postId, String title, String content, String author, LocalDateTime createdAt, LocalDateTime updatedAt, PostType useYn) {
+	public Post(long postId, String title, String content, String author, LocalDateTime createdAt, LocalDateTime updatedAt, String password, PostType useYn) {
 		this.postId = postId;
 		this.title = title;
 		this.content = content;
 		this.author = author;
 		this.createdAt = createdAt;
 		this.updatedAt = updatedAt;
+		this.password = password;
 		this.useYn = useYn;
 	}
 

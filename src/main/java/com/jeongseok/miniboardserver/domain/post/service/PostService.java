@@ -6,6 +6,7 @@ import com.jeongseok.miniboardserver.domain.post.dto.request.UpdatePostRequest;
 import com.jeongseok.miniboardserver.domain.post.dto.response.PostResponse;
 import com.jeongseok.miniboardserver.domain.post.repository.PostRepository;
 import com.jeongseok.miniboardserver.domain.post.util.PostType;
+import com.jeongseok.miniboardserver.domain.post.util.SimpleEncrypt;
 import jakarta.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Service;
 public class PostService {
 
 	private final PostRepository postRepository;
+	private final SimpleEncrypt simpleEncrypt;
 
 	public List<PostResponse> findAll() {
 		List<Post> posts = postRepository.findAllByUseYn(PostType.Y);
@@ -36,6 +38,9 @@ public class PostService {
 
 	@Transactional
 	public long createPost(CreatePostRequest createPostRequest) {
+
+		createPostRequest.setPassword(simpleEncrypt.encryptPassword(createPostRequest.getPassword()));
+
 		Post savedPost = postRepository.save(createPostRequest.toEntity());
 
 		return savedPost.getPostId();
