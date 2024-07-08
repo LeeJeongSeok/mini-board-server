@@ -3,10 +3,14 @@ package com.jeongseok.miniboardserver.domain.post.controller;
 import com.jeongseok.miniboardserver.common.ApiResponse;
 import com.jeongseok.miniboardserver.domain.post.dto.request.CreatePostRequest;
 import com.jeongseok.miniboardserver.domain.post.dto.request.UpdatePostRequest;
+import com.jeongseok.miniboardserver.domain.post.dto.request.VerifyPostRequest;
 import com.jeongseok.miniboardserver.domain.post.dto.response.PostResponse;
 import com.jeongseok.miniboardserver.domain.post.service.PostService;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import java.util.List;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -48,6 +52,22 @@ public class PostController {
 		ApiResponse<Long> response = ApiResponse.success(postId);
 
 		return new ResponseEntity<>(response, HttpStatus.CREATED);
+	}
+
+	@PostMapping("/api/v1/posts/verify")
+	public ResponseEntity<ApiResponse<Long>> verifyPostPassword(@RequestBody VerifyPostRequest verifyPostRequest, HttpServletResponse response) {
+		boolean isVerify = postService.verifyPassword(verifyPostRequest);
+
+		if (!isVerify) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+
+		Cookie cookie = new Cookie("token", UUID.randomUUID().toString());
+		cookie.setMaxAge(3 * 60); // 3분 유효시간 설정
+		cookie.setHttpOnly(true); // 보안 설정
+		response.addCookie(cookie);
+
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
 	@PutMapping("/api/v1/posts/{postId}")
