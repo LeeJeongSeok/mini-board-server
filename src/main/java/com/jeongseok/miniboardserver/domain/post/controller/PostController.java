@@ -3,7 +3,7 @@ package com.jeongseok.miniboardserver.domain.post.controller;
 import com.jeongseok.miniboardserver.common.ApiResponse;
 import com.jeongseok.miniboardserver.domain.post.dto.request.CreatePostRequest;
 import com.jeongseok.miniboardserver.domain.post.dto.request.UpdatePostRequest;
-import com.jeongseok.miniboardserver.domain.post.dto.request.VerifyPostRequest;
+import com.jeongseok.miniboardserver.domain.post.dto.request.VerifyPostAuthRequest;
 import com.jeongseok.miniboardserver.domain.post.dto.response.PostResponse;
 import com.jeongseok.miniboardserver.domain.post.service.PostService;
 import jakarta.servlet.http.Cookie;
@@ -56,8 +56,8 @@ public class PostController {
 	}
 
 	@PostMapping("/api/v1/posts/verify")
-	public ResponseEntity<ApiResponse<Long>> verifyPostPassword(@RequestBody VerifyPostRequest verifyPostRequest, HttpServletResponse response) {
-		boolean isVerify = postService.verifyPassword(verifyPostRequest);
+	public ResponseEntity<ApiResponse<Long>> verifyPostPassword(@RequestBody VerifyPostAuthRequest verifyPostAuthRequest, HttpServletResponse response) {
+		boolean isVerify = postService.verifyPassword(verifyPostAuthRequest);
 
 		if (!isVerify) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

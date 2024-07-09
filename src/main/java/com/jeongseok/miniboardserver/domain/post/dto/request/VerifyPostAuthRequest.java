@@ -2,11 +2,10 @@ package com.jeongseok.miniboardserver.domain.post.dto.request;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 
 @Getter
 @RequiredArgsConstructor
-public class VerifyPostRequest {
+public class VerifyPostAuthRequest {
 
 	private final long postId;
 	private final String password;
