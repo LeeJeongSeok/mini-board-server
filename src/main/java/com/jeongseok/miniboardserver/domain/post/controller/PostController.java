@@ -7,6 +7,7 @@ import com.jeongseok.miniboardserver.domain.post.dto.request.VerifyPostRequest;
 import com.jeongseok.miniboardserver.domain.post.dto.response.PostResponse;
 import com.jeongseok.miniboardserver.domain.post.service.PostService;
 import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import java.util.List;
@@ -71,7 +72,13 @@ public class PostController {
 	}
 
 	@PutMapping("/api/v1/posts/{postId}")
-	public ResponseEntity<ApiResponse<PostResponse>> updatePost(@PathVariable long postId, @Valid @RequestBody UpdatePostRequest updatePostRequest) {
+	public ResponseEntity<ApiResponse<PostResponse>> updatePost(@PathVariable long postId, @Valid @RequestBody UpdatePostRequest updatePostRequest, HttpServletRequest request) {
+
+		if (!isTokenCookiePresent(request)) {
+			// 쿠키가 없으므로 업데이트할 권한이 없음
+			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+		}
+
 		PostResponse postResponse = postService.updatePost(postId, updatePostRequest);
 		ApiResponse<PostResponse> response = ApiResponse.success(postResponse);
 
@@ -79,10 +86,29 @@ public class PostController {
 	}
 
 	@DeleteMapping("/api/v1/posts/{postId}")
-	public ResponseEntity<ApiResponse<String>> deletePost(@PathVariable long postId) {
+	public ResponseEntity<ApiResponse<String>> deletePost(@PathVariable long postId, HttpServletRequest request) {
+
+		if (!isTokenCookiePresent(request)) {
+			// 업데이트와 마찬가지로 쿠키가 없으므로 삭제할 권한이 없다.
+			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+		}
+
 		postService.deletePost(postId);
 		ApiResponse<String> response = ApiResponse.success();
 
 		return new ResponseEntity<>(response, HttpStatus.OK);
+	}
+
+	private boolean isTokenCookiePresent(HttpServletRequest request) {
+
+		Cookie[] cookies = request.getCookies();
+
+		for (Cookie cookie : cookies) {
+			if (cookie.getName().equals("token")) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 }
