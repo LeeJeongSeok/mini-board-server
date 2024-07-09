@@ -74,7 +74,7 @@ public class PostController {
 	@PutMapping("/api/v1/posts/{postId}")
 	public ResponseEntity<ApiResponse<PostResponse>> updatePost(@PathVariable long postId, @Valid @RequestBody UpdatePostRequest updatePostRequest, HttpServletRequest request) {
 
-		if (!isTokenCookiePresent(request)) {
+		if (!isCookiePresent(request)) {
 			// 쿠키가 없으므로 업데이트할 권한이 없음
 			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 		}
@@ -88,7 +88,7 @@ public class PostController {
 	@DeleteMapping("/api/v1/posts/{postId}")
 	public ResponseEntity<ApiResponse<String>> deletePost(@PathVariable long postId, HttpServletRequest request) {
 
-		if (!isTokenCookiePresent(request)) {
+		if (!isCookiePresent(request)) {
 			// 업데이트와 마찬가지로 쿠키가 없으므로 삭제할 권한이 없다.
 			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 		}
@@ -99,7 +99,7 @@ public class PostController {
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
-	private boolean isTokenCookiePresent(HttpServletRequest request) {
+	private boolean isCookiePresent(HttpServletRequest request) {
 
 		Cookie[] cookies = request.getCookies();
 
